@@ -17,10 +17,9 @@ import streamlit as st
 
 # Edit this block to change the identity of the whole site.
 SITE_CONFIG = {
-    "AUTHOR_NAME": "Your Name",
-    "SUBTITLE": "Notes on intelligence, interpretability, and the shape of ideas.",
-    "GITHUB_URL": "https://github.com/your-handle",
-    "TWITTER_URL": "https://x.com/your-handle",
+    "AUTHOR_NAME": "Anirudh P",
+    "SUBTITLE": "Mechanistic Interpretability.",
+    "GITHUB_URL": "https://github.com/anirudh-p1",
 }
 
 POSTS_DIR = Path(__file__).parent / "posts"
