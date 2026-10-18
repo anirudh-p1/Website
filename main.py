@@ -19,7 +19,6 @@ import streamlit as st
 SITE_CONFIG = {
     "AUTHOR_NAME": "Anirudh P",
     "SUBTITLE": "Mechanistic Interpretability.",
-    "GITHUB_URL": "https://github.com/anirudh-p1",
 }
 
 POSTS_DIR = Path(__file__).parent / "posts"
@@ -151,7 +150,7 @@ def main() -> None:
             selected = None
             st.caption("Add a .md or .txt file to posts/ to begin.")
            
-        st.markdown(f'<div class="footer"><a href="{SITE_CONFIG["GITHUB_URL"]}">GitHub</a></div>', unsafe_allow_html=True)
+       
 
     if selected is None:
         st.markdown('<p class="site-kicker">Welcome</p><h1 class="post-title">A quiet place for unfinished ideas.</h1><p class="post-subtitle">Your first essay will appear here when you add it to the posts folder.</p>', unsafe_allow_html=True)
