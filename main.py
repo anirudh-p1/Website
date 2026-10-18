@@ -18,7 +18,7 @@ import streamlit as st
 # Edit this block to change the identity of the whole site.
 SITE_CONFIG = {
     "AUTHOR_NAME": "Anirudh P",
-    "SUBTITLE": "Mechanistic Interpretability.",
+    "SUBTITLE": "",
 }
 
 POSTS_DIR = Path(__file__).parent / "posts"
