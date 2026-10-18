@@ -150,7 +150,8 @@ def main() -> None:
         else:
             selected = None
             st.caption("Add a .md or .txt file to posts/ to begin.")
-        st.markdown(f'<div class="footer"><a href="{SITE_CONFIG["GITHUB_URL"]}">GitHub</a> &nbsp;·&nbsp; <a href="{SITE_CONFIG["TWITTER_URL"]}">Twitter / X</a></div>', unsafe_allow_html=True)
+           
+        st.markdown(f'<div class="footer"><a href="{SITE_CONFIG["GITHUB_URL"]}">GitHub</a></div>', unsafe_allow_html=True)
 
     if selected is None:
         st.markdown('<p class="site-kicker">Welcome</p><h1 class="post-title">A quiet place for unfinished ideas.</h1><p class="post-subtitle">Your first essay will appear here when you add it to the posts folder.</p>', unsafe_allow_html=True)
