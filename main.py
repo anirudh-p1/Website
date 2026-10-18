@@ -70,7 +70,7 @@ def inject_styles() -> None:
         .stApp { background: var(--paper); color: var(--ink); }
         [data-testid="stHeader"] { background: rgba(250, 249, 246, .94); }
         [data-testid="stSidebar"] { background: #F1EFE9; border-right: 1px solid var(--line); }
-        [data-testid="stSidebar"] > div:first-child { padding-top: 3rem; }
+        [data-testid="stSidebar"] > div:first-child { padding-top: 1.25rem; }
         .block-container { max-width: 1180px; padding: 4rem 4rem 6rem; }
         .site-kicker, .post-meta, .eyebrow { color: var(--accent); font: 500 .72rem/1.4 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
         .site-name { color: var(--ink); font: 700 1.05rem/1.2 'DM Sans', sans-serif; margin: 0 0 .45rem; }
@@ -141,7 +141,7 @@ def main() -> None:
     posts = load_posts()
 
     with st.sidebar:
-        st.markdown(f'<p class="site-kicker"></p><p class="site-name">{SITE_CONFIG["AUTHOR_NAME"]}</p><p class="site-subtitle">{SITE_CONFIG["SUBTITLE"]}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p class="site-name">{SITE_CONFIG["AUTHOR_NAME"]}</p><p class="site-subtitle">{SITE_CONFIG["SUBTITLE"]}</p>', unsafe_allow_html=True)
         st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
         if posts:
             selected_slug = st.radio("Reading list", [post.slug for post in posts], format_func=lambda slug: next(post.title for post in posts if post.slug == slug), label_visibility="collapsed")
