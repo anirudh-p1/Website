@@ -15,9 +15,10 @@ import plotly.graph_objects as go
 import streamlit as st
 
 
-# Global Identity Variables
+# Edit this block to change the identity of the whole site.
 SITE_CONFIG = {
     "AUTHOR_NAME": "Anirudh P",
+    "SUBTITLE": "",
 }
 
 POSTS_DIR = Path(__file__).parent / "posts"
@@ -27,6 +28,7 @@ PLOT_TOKEN = "[INSERT_PLOT_SUPERPOSITION]"
 @dataclass(frozen=True)
 class Post:
     """The small, predictable content contract used by the site."""
+
     slug: str
     title: str
     subtitle: str
@@ -58,34 +60,34 @@ def load_posts() -> list[Post]:
 
 
 def inject_styles() -> None:
-    """Adjust typography metrics and remove awkward sidebar spacing blocks."""
+    """Keep layout and typography in one place so the visual system is easy to tune."""
     st.markdown(
         """
         <style>
-        @import url('https://googleapis.com');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Libre+Baskerville:wght@400;700&display=swap');
 
         :root { --paper: #FAF9F6; --ink: #1E1E1E; --muted: #6B6963; --line: #D9D6CE; --accent: #B45635; }
         .stApp { background: var(--paper); color: var(--ink); }
         [data-testid="stHeader"] { background: rgba(250, 249, 246, .94); }
-        
-        /* Shift sidebar starting baseline up to close top-left margin gaps */
         [data-testid="stSidebar"] { background: #F1EFE9; border-right: 1px solid var(--line); }
-        [data-testid="stSidebar"] > div:first-child { padding-top: 1.25rem !important; }
-        
+        [data-testid="stSidebar"] > div:first-child { padding-top: 3rem; }
         .block-container { max-width: 1180px; padding: 4rem 4rem 6rem; }
-        .post-meta { color: var(--accent); font: 500 .72rem/1.4 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
-        
-        /* Polish author name size metrics and reduce bottom spacing margins */
-        .site-name { color: var(--ink); font: 700 1.25rem/1.2 'DM Sans', sans-serif; margin: 0 0 1rem 0; }
-        
+        .site-kicker, .post-meta, .eyebrow { color: var(--accent); font: 500 .72rem/1.4 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+        .site-name { color: var(--ink); font: 700 1.05rem/1.2 'DM Sans', sans-serif; margin: 0 0 .45rem; }
+        .site-subtitle { color: var(--muted); font: .88rem/1.55 'Libre Baskerville', serif; max-width: 18rem; }
         .post-title { color: var(--ink); font: 700 clamp(2.3rem, 5vw, 4.5rem)/1.04 'Libre Baskerville', serif; letter-spacing: -.03em; margin: .8rem 0 1rem; max-width: 900px; }
         .post-subtitle { color: var(--muted); font: 1.12rem/1.65 'Libre Baskerville', serif; max-width: 720px; }
-        .rule { border-top: 1px solid var(--line); margin: 1.5rem 0; }
-        
+        .rule { border-top: 1px solid var(--line); margin: 2.2rem 0; }
+        .article-copy { max-width: 730px; color: var(--ink); font: 1.02rem/1.85 'Libre Baskerville', serif; }
         [data-testid="stMarkdownContainer"] { color: var(--ink); font-family: 'Libre Baskerville', serif; line-height: 1.85; }
         [data-testid="stMarkdownContainer"] h1, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 { font-family: 'DM Sans', sans-serif; line-height: 1.2; }
         [data-testid="stMarkdownContainer"] code, [data-testid="stMarkdownContainer"] pre { font-family: 'DM Mono', monospace; }
-        
+        .article-copy h1, .article-copy h2, .article-copy h3 { font-family: 'DM Sans', sans-serif; line-height: 1.2; margin-top: 2.5rem; }
+        .article-copy h2 { font-size: 1.55rem; }
+        .article-copy a { color: var(--accent); }
+        .article-copy blockquote { border-left: 2px solid var(--accent); color: var(--muted); margin-left: 0; padding-left: 1.2rem; }
+        .article-copy code, .article-copy pre { font-family: 'DM Mono', monospace; font-size: .86em; }
+        .article-copy pre { background: #EEECE6; border: 1px solid var(--line); border-radius: 2px; padding: 1.2rem; overflow-x: auto; }
         .footer { border-top: 1px solid var(--line); color: var(--muted); font: .78rem/1.6 'DM Mono', monospace; margin-top: 5rem; padding-top: 1rem; }
         @media (max-width: 700px) { .block-container { padding: 2.5rem 1.25rem 4rem; } .post-title { font-size: 2.5rem; } }
         </style>
@@ -129,6 +131,7 @@ def render_body(body: str) -> None:
         if section == PLOT_TOKEN:
             render_superposition_plot()
         elif section.strip():
+            # Let Streamlit parse Markdown and LaTeX directly; raw HTML wrappers can disable both.
             st.markdown(section)
 
 
@@ -138,24 +141,22 @@ def main() -> None:
     posts = load_posts()
 
     with st.sidebar:
-        # Render a clean typography title header block without structural metadata lines
-        st.markdown(f'<p class="site-name">{SITE_CONFIG["AUTHOR_NAME"]}</p>', unsafe_allow_html=True)
-        st.markdown('<div class="rule" style="margin: 0.5rem 0 1.5rem 0;"></div>', unsafe_allow_html=True)
-        
+        st.markdown(f'<p class="site-kicker"></p><p class="site-name">{SITE_CONFIG["AUTHOR_NAME"]}</p><p class="site-subtitle">{SITE_CONFIG["SUBTITLE"]}</p>', unsafe_allow_html=True)
+        st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
         if posts:
             selected_slug = st.radio("Reading list", [post.slug for post in posts], format_func=lambda slug: next(post.title for post in posts if post.slug == slug), label_visibility="collapsed")
             selected = next(post for post in posts if post.slug == selected_slug)
         else:
             selected = None
             st.caption("Add a .md or .txt file to posts/ to begin.")
+           
+       
 
     if selected is None:
         st.markdown('<p class="site-kicker">Welcome</p><h1 class="post-title">A quiet place for unfinished ideas.</h1><p class="post-subtitle">Your first essay will appear here when you add it to the posts folder.</p>', unsafe_allow_html=True)
         return
 
-    # Cleaned metadata panel title tag variables
-    clean_meta = selected.slug.split('_', 1)[-1].replace('_', ' ').capitalize()
-    st.markdown(f'<p class="post-meta">{clean_meta}</p><h1 class="post-title">{selected.title}</h1><p class="post-subtitle">{selected.subtitle}</p><div class="rule"></div>', unsafe_allow_html=True)
+    st.markdown(f'<p class="post-meta">{selected.slug.replace("_", " ")}</p><h1 class="post-title">{selected.title}</h1><p class="post-subtitle">{selected.subtitle}</p><div class="rule"></div>', unsafe_allow_html=True)
     render_body(selected.body)
     st.markdown(f'<div class="footer">{SITE_CONFIG["AUTHOR_NAME"]} · {selected.title}</div>', unsafe_allow_html=True)
 
