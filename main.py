@@ -60,10 +60,12 @@ def load_posts() -> list[Post]:
 
 
 def inject_styles() -> None:
-    """Restores native system fonts, fixes gaps, and strips all Streamlit branding UI."""
+    """Keep layout and typography in one place so the visual system is easy to tune."""
     st.markdown(
         """
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Libre+Baskerville:wght@400;700&display=swap');
+
         :root { --paper: #FAF9F6; --ink: #1E1E1E; --muted: #6B6963; --line: #D9D6CE; --accent: #B45635; }
         .stApp { background: var(--paper); color: var(--ink); }
         [data-testid="stHeader"] { background: rgba(250, 249, 246, .94); }
@@ -73,6 +75,19 @@ def inject_styles() -> None:
         [data-testid="stSidebar"] > div:first-child { padding-top: 1.25rem !important; }
         
         .block-container { max-width: 1180px; padding: 4rem 4rem 6rem; }
+        .site-kicker, .post-meta, .eyebrow { color: var(--accent); font: 500 .72rem/1.4 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+        .site-subtitle { color: var(--muted); font: .88rem/1.55 'Libre Baskerville', serif; max-width: 18rem; }
+        .article-copy { max-width: 730px; color: var(--ink); font: 1.02rem/1.85 'Libre Baskerville', serif; }
+        [data-testid="stMarkdownContainer"] { color: var(--ink); font-family: 'Libre Baskerville', serif; line-height: 1.85; }
+        [data-testid="stMarkdownContainer"] h1, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 { font-family: 'DM Sans', sans-serif; line-height: 1.2; }
+        [data-testid="stMarkdownContainer"] code, [data-testid="stMarkdownContainer"] pre { font-family: 'DM Mono', monospace; }
+        .article-copy h1, .article-copy h2, .article-copy h3 { font-family: 'DM Sans', sans-serif; line-height: 1.2; margin-top: 2.5rem; }
+        .article-copy h2 { font-size: 1.55rem; }
+        .article-copy a { color: var(--accent); }
+        .article-copy blockquote { border-left: 2px solid var(--accent); color: var(--muted); margin-left: 0; padding-left: 1.2rem; }
+        .article-copy code, .article-copy pre { font-family: 'DM Mono', monospace; font-size: .86em; }
+        .article-copy pre { background: #EEECE6; border: 1px solid var(--line); border-radius: 2px; padding: 1.2rem; overflow-x: auto; }
+        @media (max-width: 700px) { .block-container { padding: 2.5rem 1.25rem 4rem; } .post-title { font-size: 2.5rem; } }
         .post-meta { color: var(--accent); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
         
         /* Clean default typography settings */
@@ -83,9 +98,7 @@ def inject_styles() -> None:
         
         .footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; margin-top: 5rem; padding-top: 1rem; }
 
-        # ==============================================================================
-        # FORCE REMOVE STREAMLIT HOSTING UI (The Branding Stripper)
-        # ==============================================================================
+        /* FORCE REMOVE STREAMLIT HOSTING UI */
         /* Hides the top-right toolbar including 'Fork this app', 'Deploy', and 'Manage app' statuses */
         [data-testid="stStatusWidget"], [data-testid="stToolbar"], .stDeployButton { 
             display: none !important; 
