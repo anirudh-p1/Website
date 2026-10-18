@@ -141,7 +141,7 @@ def main() -> None:
     posts = load_posts()
 
     with st.sidebar:
-        st.markdown(f'<p class="site-kicker">Independent research</p><p class="site-name">{SITE_CONFIG["AUTHOR_NAME"]}</p><p class="site-subtitle">{SITE_CONFIG["SUBTITLE"]}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p class="site-kicker"></p><p class="site-name">{SITE_CONFIG["AUTHOR_NAME"]}</p><p class="site-subtitle">{SITE_CONFIG["SUBTITLE"]}</p>', unsafe_allow_html=True)
         st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
         if posts:
             selected_slug = st.radio("Reading list", [post.slug for post in posts], format_func=lambda slug: next(post.title for post in posts if post.slug == slug), label_visibility="collapsed")
