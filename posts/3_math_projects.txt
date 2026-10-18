@@ -1,0 +1,9 @@
+Math projects
+Small experiments in linear algebra, geometry, and probability.
+
+This is a template post. Use it for short project notes or link out to a longer notebook.
+
+```python
+def remember_the_shape(problem):
+    return "intuition first, notation second"
+```
