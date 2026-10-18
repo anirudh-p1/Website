@@ -1,4 +1,4 @@
-# File-Driven Research Portfolio
+# File-Driven Website
 
 A minimal Streamlit portfolio inspired by academic web essays. Content lives in `posts/`; the app discovers it automatically.
 
