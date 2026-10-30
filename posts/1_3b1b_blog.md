@@ -1,4 +1,4 @@
-3Blue1Brown Blog
+3B1B Blog
 Notes on visual mathematics, intuition, and the ideas behind 3Blue1Brown.
 
 This is the home for the 3Blue1Brown blog. Replace this text with your first
