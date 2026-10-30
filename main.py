@@ -37,15 +37,20 @@ class Post:
 
 
 def load_posts() -> list[Post]:
-    """Load every .md/.txt post, ordered by its filename for stable navigation."""
+    """Load valid .md/.txt posts, ordered by filename for stable navigation.
+
+    Every post is intentionally plain text: title on line one, subtitle on line
+    two, and Markdown content after that. This keeps adding a page as simple as
+    creating a file in ``posts/``.
+    """
     POSTS_DIR.mkdir(exist_ok=True)
     posts: list[Post] = []
 
     for path in sorted(POSTS_DIR.glob("*")):
-        if path.suffix.lower() not in {".md", ".txt"}:
+        if not path.is_file() or path.suffix.lower() not in {".md", ".txt"}:
             continue
         lines = path.read_text(encoding="utf-8").splitlines()
-        if len(lines) < 2:
+        if len(lines) < 2 or not lines[0].strip() or not lines[1].strip():
             continue
         posts.append(
             Post(

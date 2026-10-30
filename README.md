@@ -9,9 +9,7 @@ Website/
 ├── main.py
 ├── requirements.txt
 └── posts/
-	├── 1_superposition.md
-	├── 2_3b1b_blog.md
-	└── 3_math_projects.txt
+	└── 1_3b1b_blog.md
 ```
 
 Each post uses this format:
@@ -23,7 +21,11 @@ Subtitle
 Markdown body, including $inline$ or $$block$$ LaTeX and fenced code.
 ```
 
-Filenames control navigation order. Add `.md` or `.txt` files to `posts/`, and restart or reload Streamlit to see them. The special token `[INSERT_PLOT_SUPERPOSITION]` inserts the interactive Plotly visualization.
+Filenames control navigation order. Add another `.md` or `.txt` file to
+`posts/` to add another page, then restart or reload Streamlit to see it. Keep
+the first two lines as the title and subtitle; everything after them is the
+page body. The special token `[INSERT_PLOT_SUPERPOSITION]` inserts the
+interactive Plotly visualization.
 
 ## Run
 
